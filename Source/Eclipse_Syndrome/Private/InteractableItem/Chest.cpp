@@ -140,7 +140,7 @@ void AChest::SpawnRandomItem()
 
 		if (SelectedItemClass)
 		{
-			FVector SpawnLocation = GetActorLocation() + FVector(-10, 0, 110);
+			FVector SpawnLocation = GetActorLocation() + FVector(-10, 10, 110);
 			FRotator SpawnRotation = FRotator::ZeroRotator;
 			
 			
@@ -151,11 +151,14 @@ void AChest::SpawnRandomItem()
 				//for space between bullet
 				float Spacing = 23.0f;
 
+				float StartOffset = -((BulletCount - 1) / 2.0f) * Spacing;
+
 				for (int32 i = 0; i < BulletCount; i++)
 				{
-
-					FVector BulletSpawnLocation = SpawnLocation + FVector(i*Spacing, 0, 0);
-					AActor* SpawnedBullet = GetWorld()->SpawnActor<AActor>(SelectedItemClass, BulletSpawnLocation, SpawnRotation);
+					float Offset = StartOffset + i * Spacing;
+					FVector BulletSpawnLocation = SpawnLocation + FVector(Offset, 0, 0);
+					//AActor* SpawnedBullet = GetWorld()->SpawnActor<AActor>(SelectedItemClass, BulletSpawnLocation, SpawnRotation);
+					GetWorld()->SpawnActor<AActor>(SelectedItemClass, BulletSpawnLocation, SpawnRotation);
 				}
 				UE_LOG(LogTemp, Warning, TEXT("Spawned %d BulletItems"), BulletCount);
 			}

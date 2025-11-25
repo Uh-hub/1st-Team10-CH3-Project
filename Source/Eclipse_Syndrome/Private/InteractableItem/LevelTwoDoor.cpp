@@ -33,7 +33,7 @@ void ALevelTwoDoor::BeginPlay()
 {
 	Super::BeginPlay();
 	ClosedPosition = GetActorLocation();
-	OpenPosition = ClosedPosition + FVector(0.0f, 330.0f, 0.0f);
+	OpenPosition = ClosedPosition + FVector(0.0f, 347.0f, 0.0f);
 }
 
 void ALevelTwoDoor::Tick(float DeltaTime)

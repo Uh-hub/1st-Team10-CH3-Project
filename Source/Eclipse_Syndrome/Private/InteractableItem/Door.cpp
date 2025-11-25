@@ -64,16 +64,26 @@ void ADoor::OpenDoor()
 void ADoor::MoveAndRotateDoor(float DeltaTime)
 {
 	if (!DoorMesh) return;
-	
-	FVector NewLocation = FMath::VInterpTo(DoorMesh->GetRelativeLocation(), OpenLocation, DeltaTime, MoveSpeed);
-	FRotator NewRotation = FMath::RInterpTo(DoorMesh->GetRelativeRotation(), OpenRotation, DeltaTime, MoveSpeed);
-	if (FVector::Dist(NewLocation, OpenLocation) < 1.0f && FMath::Abs(NewRotation.Yaw - OpenRotation.Yaw) < 1.0f)
+	if (!bIsOpening) return;
+	FRotator CurrentRotation = DoorMesh->GetRelativeRotation();
+	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, OpenRotation, DeltaTime, MoveSpeed);
+
+	if (FMath::Abs(NewRotation.Yaw - OpenRotation.Yaw) < 0.1f)
 	{
-		NewLocation = OpenLocation;
 		NewRotation = OpenRotation;
 		bIsOpening = false;
 	}
+
+
+	////FVector NewLocation = FMath::VInterpTo(DoorMesh->GetRelativeLocation(), OpenLocation, DeltaTime, MoveSpeed);
+	//FRotator NewRotation = FMath::RInterpTo(DoorMesh->GetRelativeRotation(), OpenRotation, DeltaTime, MoveSpeed);
+	///*if (FVector::Dist(NewLocation, OpenLocation) < 1.0f && FMath::Abs(NewRotation.Yaw - OpenRotation.Yaw) < 1.0f)
+	//{*/
+	//	//NewLocation = OpenLocation;
+	//	NewRotation = OpenRotation;
+	//	bIsOpening = false;
+	////}
 	
-	DoorMesh->SetRelativeLocation(NewLocation);
+	//DoorMesh->SetRelativeLocation(NewLocation);
 	DoorMesh->SetRelativeRotation(NewRotation);
 }
